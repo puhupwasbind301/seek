@@ -17,7 +17,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider>
       <CountriesProvider value={countriesContextValue}>
-        <Router>
+        <Router  basename="/seek">
           <GlobalStyles />
           <HeaderWrapper />
           <Routes>
