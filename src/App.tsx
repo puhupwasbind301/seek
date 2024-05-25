@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { CountriesProvider, CountriesContextProps } from './context/CountriesContext';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+import HomePage from './pages/HomePage';
+import DetailPage from './pages/DetailPage';
+import Header from './components/Header';
+import GlobalStyles from './styles/GlobalStyles';
 
-function App() {
+const App: React.FC = () => {
+  const countriesContextValue: CountriesContextProps = {
+    countries: [], 
+    filter: '', 
+    setFilter: () => {}, 
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider>
+      <CountriesProvider value={countriesContextValue}>
+        <Router>
+          <GlobalStyles />
+          <HeaderWrapper />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/country/:alpha3Code" element={<DetailPage />} />
+          </Routes>
+        </Router>
+      </CountriesProvider>
+    </ThemeProvider>
   );
-}
+};
+
+const HeaderWrapper: React.FC = () => {
+  const { toggleTheme } = useTheme();
+  return <Header toggleTheme={toggleTheme} />;
+};
 
 export default App;

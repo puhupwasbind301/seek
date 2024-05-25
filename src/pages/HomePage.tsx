@@ -48,7 +48,7 @@ const HomePage: React.FC = () => {
         handleRegionChange={handleRegionChange}
       />
       <HomeContainer>
-        {filteredCountries?.map((country) => (
+        {filteredCountries.map((country) => (
           <CountryCard key={country.alpha3Code} country={country} />
         ))}
       </HomeContainer>
